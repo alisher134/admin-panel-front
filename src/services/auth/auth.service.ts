@@ -1,60 +1,60 @@
-import { axiosClassic, instance } from '@/api/axios'
+import { axiosClassic, instance } from "@/api/axios";
 
-import { IAuthFormData, IUser } from '@/types'
-import { removeFromStorage, saveTokenStorage } from './auth.helper'
+import { IAuthFormData, IUser } from "@/types";
+import { removeFromStorage, saveTokenStorage } from "./auth.helper";
 
 interface IAuthResponse {
-	accessToken: string
-	user: IUser
+  accessToken: string;
+  user: IUser;
 }
 
 class AuthService {
-	async main(type: 'login' | 'register', data: IAuthFormData) {
-		const response = await axiosClassic.post<IAuthResponse>(
-			`/auth/${type}`,
-			data
-		)
+  async main(type: "login" | "register", data: IAuthFormData) {
+    const response = await axiosClassic.post<IAuthResponse>(
+      `/auth/${type}`,
+      data
+    );
 
-		if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
+    if (response.data.accessToken) saveTokenStorage(response.data.accessToken);
 
-		return response
-	}
+    return response;
+  }
 
-	async getNewTokens() {
-		const response = await axiosClassic.post<IAuthResponse>(
-			'/auth/login/access-token'
-		)
+  async getNewTokens() {
+    const response = await axiosClassic.post<IAuthResponse>(
+      "/auth/login/access-token"
+    );
 
-		if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
+    if (response.data.accessToken) saveTokenStorage(response.data.accessToken);
 
-		return response
-	}
+    return response;
+  }
 
-	async getNewTokensByRefresh(refreshToken: string) {
-		const response = await axiosClassic.post<IAuthResponse>(
-			'/auth/login/access-token',
-			{},
-			{
-				headers: {
-					Cookie: `refreshToken=${refreshToken}`,
-				},
-			}
-		)
+  async getNewTokensByRefresh(refreshToken: string) {
+    const response = await axiosClassic.post<IAuthResponse>(
+      "/auth/login/access-token",
+      {},
+      {
+        headers: {
+          Cookie: `refreshToken=${refreshToken}`,
+        },
+      }
+    );
 
-		return response.data
-	}
+    return response.data;
+  }
 
-	async logout() {
-		const response = await axiosClassic.post<boolean>('/auth/logout')
+  async logout() {
+    const response = await axiosClassic.post<boolean>("/auth/logout");
 
-		if (response.data) removeFromStorage()
+    if (response.data) removeFromStorage();
 
-		return response
-	}
+    return response;
+  }
 
-	async profile() {
-		return instance.get<IUser>(`/auth/profile`)
-	}
+  async profile() {
+    return instance.get<IUser>(`/auth/profile`);
+  }
 }
 
-export default new AuthService()
+export default new AuthService();
