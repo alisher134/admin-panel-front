@@ -4,7 +4,8 @@ const nextConfig = {
     return [
       {
         source: "/uploads/:path*",
-        destination: "https://api.datasec.org.kz/uploads/:path*",
+        destination: "http://localhost:4200/uploads/:path*",
+        // destination: "https://api.datasec.org.kz/uploads/:path*",
       },
     ];
   },

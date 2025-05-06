@@ -1,37 +1,42 @@
-'use client'
-import { Loader } from '@/components/ui/loader/Loader'
-import { useProfile } from '@/hooks/useProfile'
-import { ProfileInfo } from './admin/ProfileInfo'
-import { RecentVideo } from './admin/RecentVideo'
-import { MainChart } from './admin/charts/MainChart'
-import { Numbers } from './admin/charts/Numbers'
-import { RadarChart } from './admin/charts/RadarChart'
-import { ManageUsers } from './admin/users/ManageUsers'
+"use client";
+
+import { MainForm } from "./(main)/(form)/MainForm";
+import { MainFooter } from "./(main)/MainFooter";
+import { MainHeader } from "./(main)/MainHeader";
+import { MainNav } from "./(main)/MainNav";
+
+export interface ILink {
+  name: string;
+  link: string;
+}
 
 export default function Home() {
-	const { user, isLoading } = useProfile()
+  const links: ILink[] = [
+    { name: "biz turaly", link: "/" },
+    { name: "komek", link: "/" },
+    { name: "kitapkhana", link: "/" },
+    { name: "baylanys", link: "/" },
+  ];
 
-	return isLoading ? (
-		<div className='w-screen h-screen flex items-center justify-center'>
-			<Loader />
-		</div>
-	) : (
-		<main className='min-h-screen p-6'>
-			<ProfileInfo />
+  return (
+    <div className="px-32 py-4">
+      <MainHeader />
 
-			{!user.isAdmin ? (
-				'You are not an admin'
-			) : (
-				<>
-					<MainChart />
-					<Numbers />
-					<div>
-						<RadarChart />
-						<RecentVideo />
-						<ManageUsers />
-					</div>
-				</>
-			)}
-		</main>
-	)
+      <div>
+        <h1 className="font-black uppercase text-6xl mt-5">
+          Data Security .ORG.
+        </h1>
+      </div>
+
+      <div className="flex gap-10 justify-between">
+        <MainNav links={links} />
+
+        <div className="mt-40">
+          <MainForm />
+        </div>
+      </div>
+
+      <MainFooter />
+    </div>
+  );
 }

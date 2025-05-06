@@ -11,8 +11,9 @@ export const getAccessToken = () => {
 };
 
 export const saveTokenStorage = (accessToken: string) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
   Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {
-    domain: "datasec.org.kz",
+    domain,
     sameSite: "strict",
     expires: 1,
   });
