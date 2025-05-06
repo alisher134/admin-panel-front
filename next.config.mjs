@@ -1,11 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
+    const isProd = process.env.NODE_ENV === "production";
+
     return [
       {
         source: "/uploads/:path*",
-        destination: "http://localhost:4200/uploads/:path*",
-        // destination: "https://api.datasec.org.kz/uploads/:path*",
+        destination: isProd
+          ? "https://api.datasec.org.kz/uploads/:path*"
+          : "http://localhost:4200/uploads/:path*",
       },
     ];
   },

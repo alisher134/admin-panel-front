@@ -7,7 +7,7 @@ interface MainNavProps {
 
 export const MainNav = ({ links }: { links: MainNavProps[] }) => {
   return (
-    <nav className="my-7">
+    <nav className="my-24">
       <ul className="flex flex-col gap-6">
         {links.map((link) => (
           <li

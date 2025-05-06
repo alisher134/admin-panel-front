@@ -1,5 +1,6 @@
 "use client";
 
+import { useClientAuth } from "@/hooks/useClientAuth";
 import { MainForm } from "./(main)/(form)/MainForm";
 import { MainFooter } from "./(main)/MainFooter";
 import { MainHeader } from "./(main)/MainHeader";
@@ -11,6 +12,8 @@ export interface ILink {
 }
 
 export default function Home() {
+  const isAuth = useClientAuth();
+
   const links: ILink[] = [
     { name: "biz turaly", link: "/" },
     { name: "komek", link: "/" },
@@ -23,7 +26,7 @@ export default function Home() {
       <MainHeader />
 
       <div>
-        <h1 className="font-black uppercase text-6xl mt-5">
+        <h1 className="font-black uppercase text-7xl mt-5">
           Data Security .ORG.
         </h1>
       </div>
@@ -31,9 +34,23 @@ export default function Home() {
       <div className="flex gap-10 justify-between">
         <MainNav links={links} />
 
-        <div className="mt-40">
-          <MainForm />
-        </div>
+        {isAuth ? (
+          <div className="mt-40">
+            <MainForm />
+          </div>
+        ) : (
+          <div className="mt-96 w-[480px]">
+            <p>
+              Aqparattyq qauipsizdik oqigalaryn tirkeu zhane derbes derekterdin
+              zhylystauyn baqulay zhuiesi
+            </p>
+            <p className="mt-8">
+              Zhoba Qazaqstan aumagynda tirkelgen cyber shabuyldardy zhariyalap,
+              qauipsizdik mamandarynyn bilikiligin arttyruga zhene sheshimderdi
+              qamtidy. Zhuyie 24/7 qoldau korsetedi7
+            </p>
+          </div>
+        )}
       </div>
 
       <MainFooter />

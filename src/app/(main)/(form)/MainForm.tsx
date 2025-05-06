@@ -10,7 +10,6 @@ import { IMainForm } from "./main-form.types";
 export const MainForm = () => {
   const {
     register: registerInput,
-    formState: { errors },
     handleSubmit,
     control,
     reset,

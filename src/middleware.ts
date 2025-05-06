@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const refreshToken = request.cookies.get(EnumTokens.REFRESH_TOKEN)?.value;
   let accessToken = request.cookies.get(EnumTokens.ACCESS_TOKEN)?.value;
   // /admin
-  const isAdminPage = request.url.includes("/");
+  const isAdminPage = request.url.includes("/admin");
 
   if (!refreshToken) {
     request.cookies.delete(EnumTokens.ACCESS_TOKEN);
@@ -37,7 +37,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   try {
     const { payload }: { payload: ITokenInside } = await jwtVerify(
       accessToken,
-      new TextEncoder().encode(`${process.env.JWT_SECRET}`)
+      new TextEncoder().encode(process.env.API_JWT_SECRET)
     );
 
     if (payload?.role === UserRole.Admin) return NextResponse.next();
